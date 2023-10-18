@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FactoryDB" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-O667CA\FACTORY;Initial Catalog=FactoryDB;User ID=sa" SettingsObjectName="ForWork.Properties.Settings" SettingsPropertyName="FactoryDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Factory" Member="Factory">
+    <Type Name="Factory">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GildID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CityID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BrigadeShiftID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BrigadeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Gild_Factory" Member="Gild" ThisKey="GildID" OtherKey="GildID" Type="Gild" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Employee_Factory" Member="Employee" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="Employee" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Brigade_Factory" Member="Brigade" ThisKey="BrigadeID" OtherKey="BrigadeID" Type="Brigade" IsForeignKey="true" />
+      <Association Name="BrigadeShift_Factory" Member="BrigadeShift" ThisKey="BrigadeShiftID" OtherKey="BrigadeShiftID" Type="BrigadeShift" IsForeignKey="true" />
+      <Association Name="City_Factory" Member="City" ThisKey="CityID" OtherKey="CityID" Type="City" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Gild" Member="Gild">
+    <Type Name="Gild">
+      <Column Name="GildID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GildName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Gild_Factory" Member="Factory" ThisKey="GildID" OtherKey="GildID" Type="Factory" />
+      <Association Name="Gild_CityGildEmployee" Member="CityGildEmployee" ThisKey="GildID" OtherKey="GildID" Type="CityGildEmployee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee" Member="Employee">
+    <Type Name="Employee">
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_Factory" Member="Factory" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="Factory" />
+      <Association Name="Employee_CityGildEmployee" Member="CityGildEmployee" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="CityGildEmployee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Brigade" Member="Brigade">
+    <Type Name="Brigade">
+      <Column Name="BrigadeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BrigadeName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Brigade_Factory" Member="Factory" ThisKey="BrigadeID" OtherKey="BrigadeID" Type="Factory" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BrigadeShift" Member="BrigadeShift">
+    <Type Name="BrigadeShift">
+      <Column Name="BrigadeShiftID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ShiftName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="BrigadeShift_Factory" Member="Factory" ThisKey="BrigadeShiftID" OtherKey="BrigadeShiftID" Type="Factory" />
+    </Type>
+  </Table>
+  <Table Name="dbo.City" Member="City">
+    <Type Name="City">
+      <Column Name="CityID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CityName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="City_Factory" Member="Factory" ThisKey="CityID" OtherKey="CityID" Type="Factory" />
+      <Association Name="City_CityGildEmployee" Member="CityGildEmployee" ThisKey="CityID" OtherKey="CityID" Type="CityGildEmployee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CityGildEmployee" Member="CityGildEmployee">
+    <Type Name="CityGildEmployee">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CityID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GildID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="City_CityGildEmployee" Member="City" ThisKey="CityID" OtherKey="CityID" Type="City" IsForeignKey="true" />
+      <Association Name="Employee_CityGildEmployee" Member="Employee" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="Employee" IsForeignKey="true" />
+      <Association Name="Gild_CityGildEmployee" Member="Gild" ThisKey="GildID" OtherKey="GildID" Type="Gild" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

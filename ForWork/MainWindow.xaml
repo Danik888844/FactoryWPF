@@ -1,0 +1,62 @@
+﻿<Window x:Class="ForWork.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForWork"
+        mc:Ignorable="d"
+        Title="Factory" MinHeight="400" MinWidth="900" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:FactoryDBDataSet x:Key="factoryDBDataSet"/>
+        <CollectionViewSource x:Key="factoryViewSource" Source="{Binding Factory, Source={StaticResource factoryDBDataSet}}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource factoryViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0" Content="Город" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cbCities" Grid.Column="0" Grid.Row="0" FontSize="17" HorizontalAlignment="Right" Margin="0,0,30,0" Width="290" Height="30" 
+                  DisplayMemberPath="CityName" SelectedValuePath="CityID" SelectionChanged="CbCities_SelectionChanged"/>
+
+        <Label Grid.Column="0" Grid.Row="1" Content="Цех" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cbGild" Grid.Column="0" Grid.Row="1" FontSize="17" HorizontalAlignment="Right" Margin="0,0,30,0" Width="290" Height="30"
+                  DisplayMemberPath="GildName" SelectedValuePath="GildID" SelectionChanged="CbGild_SelectionChanged" IsEnabled="false"/>
+
+        <Label Grid.Column="0" Grid.Row="2" Content="Работник" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cbEmployee" Grid.Column="0" Grid.Row="2" FontSize="17" HorizontalAlignment="Right" Margin="0,0,30,0" Width="290" Height="30"
+                  DisplayMemberPath="FullName" SelectedValuePath="EmployeeID" IsEnabled="false"/>
+
+        <Label Grid.Column="0" Grid.Row="3" Content="Бригада" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cbBrigade" Grid.Column="0" Grid.Row="3" FontSize="17" HorizontalAlignment="Right" Margin="0,0,30,0" Width="290" Height="30"
+                  DisplayMemberPath="BrigadeName" SelectedValuePath="BrigadeID"/>
+
+        <Label Grid.Column="0" Grid.Row="4" Content="Смена" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cbShift" Grid.Column="0" Grid.Row="4" FontSize="17" HorizontalAlignment="Right" Margin="0,0,30,0" Width="290" Height="30"
+                  DisplayMemberPath="ShiftName" SelectedValuePath="BrigadeShiftID"/>
+
+        <Button Grid.Column="0" Grid.Row="5" Width="100" Height="30" Margin="100,0,0,0" HorizontalAlignment="Left" Content="Save as JSON" Click="SaveAsJson_Click"/>
+        <Button Grid.Column="0" Grid.Row="5" Width="100" Height="30" Margin="0,0,100,0" HorizontalAlignment="Right" Content="Save" Click="Button_Click"/>
+        
+        <DataGrid x:Name="factoryDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Column="1" Grid.RowSpan="6" Grid.Row="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" IsReadOnly="True" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="gildIDColumn" Binding="{Binding GildID}" Header="Цех" Width="*"/>
+                <DataGridTextColumn x:Name="employeeIDColumn" Binding="{Binding EmployeeID}" Header="Работник" Width="*"/>
+                <DataGridTextColumn x:Name="cityIDColumn" Binding="{Binding CityID}" Header="Город" Width="*"/>
+                <DataGridTextColumn x:Name="brigadeIDColumn" Binding="{Binding BrigadeID}" Header="Бригада" Width="*"/>
+                <DataGridTextColumn x:Name="brigadeShiftIDColumn" Binding="{Binding BrigadeShiftID}" Header="Смена" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
